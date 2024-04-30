@@ -1,11 +1,9 @@
-import 'dart:ffi';
-
-import 'package:llvm/bindings.dart';
-import 'package:llvm/llvm.dart';
+import '../../bindings.dart';
+import '../disposable.dart';
+import '../llvm.dart';
 
 class Context extends LlvmWrappedObject<LLVMContext> implements Disposable {
-  Context.raw(Pointer<LLVMContext> handle, [Llvm llvm])
-      : super.raw(handle, llvm);
+  Context.raw(super.handle, [super.llvm]) : super.raw();
 
   factory Context() {
     final ctx = Context.raw(llvm.bindings.LLVMContextCreate());

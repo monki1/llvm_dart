@@ -1,11 +1,10 @@
-import 'dart:ffi';
+// import 'dart:ffi';
 
-import 'package:llvm/bindings.dart';
-import 'package:llvm/llvm.dart';
+import '../../bindings.dart';
+import '../llvm.dart';
 
 class BasicBlock extends LlvmWrappedObject<LLVMBasicBlock> {
-  BasicBlock.raw(Pointer<LLVMBasicBlock> handle, [Llvm llvm])
-      : super.raw(handle, llvm);
+  BasicBlock.raw(super.handle, [super.llvm]) : super.raw();
 
   void delete() {
     bindings.LLVMDeleteBasicBlock(handle);

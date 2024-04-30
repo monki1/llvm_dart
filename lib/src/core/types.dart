@@ -1,12 +1,13 @@
 import 'dart:ffi';
 
-import 'package:llvm/bindings.dart';
-import 'package:llvm/llvm.dart';
+import '../../bindings.dart';
+import '../llvm.dart';
+import 'context.dart';
 
 abstract class LlvmType extends LlvmWrappedObject<LLVMType> {
-  LlvmType.raw(Pointer<LLVMType> handle, [Llvm llvm]) : super.raw(handle, llvm);
+  LlvmType.raw(super.handle, [super.llvm]) : super.raw();
 
-  factory LlvmType.of(Pointer<LLVMType> handle, [Llvm llvm]) {
+  factory LlvmType.of(Pointer<LLVMType> handle, [Llvm? llvm]) {
     throw UnsupportedError('Not yet implemented');
   }
 
@@ -19,9 +20,9 @@ abstract class LlvmType extends LlvmWrappedObject<LLVMType> {
 }
 
 class IntType extends LlvmType {
-  IntType.raw(Pointer<LLVMType> handle, [Llvm llvm]) : super.raw(handle, llvm);
+  IntType.raw(super.handle, [super.llvm]) : super.raw();
 
-  factory IntType(int numBits, [Context context]) {
+  factory IntType(int numBits, [Context? context]) {
     context ??= llvm.globalContext;
     return IntType.raw(
         llvm.bindings.LLVMIntTypeInContext(context.handle, numBits));
@@ -31,8 +32,7 @@ class IntType extends LlvmType {
 }
 
 class FunctionType extends LlvmType {
-  FunctionType.raw(Pointer<LLVMType> handle, [Llvm llvm])
-      : super.raw(handle, llvm);
+  FunctionType.raw(super.handle, [super.llvm]) : super.raw();
 
   factory FunctionType(LlvmType returnType, List<LlvmType> parameters,
       {bool isVarArg = false}) {

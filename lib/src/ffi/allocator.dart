@@ -24,13 +24,13 @@ abstract class Allocator {
 class _DefaultAllocator implements Allocator {
   final _allocated = <int>{};
 
-  Pointer _tmpOut;
+  Pointer? _tmpOut;
   @override
   Pointer get tmpOut => _tmpOut ??= allocate<Pointer<Void>>();
 
   @override
   Pointer<T> allocate<T extends NativeType>({int count = 1}) {
-    final ptr = ffi.allocate<T>(count: count);
+    final ptr = ffi.malloc.allocate<T>(count);
     _allocated.add(ptr.address);
     return ptr;
   }
@@ -39,7 +39,7 @@ class _DefaultAllocator implements Allocator {
   void free(Pointer<NativeType> ptr) {
     assert(_allocated.contains(ptr.address));
 
-    ffi.free(ptr);
+    ffi.malloc.free(ptr);
     _allocated.remove(ptr.address);
   }
 
@@ -48,7 +48,7 @@ class _DefaultAllocator implements Allocator {
     _tmpOut = null;
     for (final allocated in _allocated) {
       final ptr = Pointer.fromAddress(allocated);
-      ffi.free(ptr);
+      ffi.malloc.free(ptr);
     }
   }
 }

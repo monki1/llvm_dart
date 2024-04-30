@@ -1,14 +1,13 @@
 import 'dart:ffi';
 import 'dart:typed_data';
 
-import 'package:llvm/bindings.dart';
+import '../../bindings.dart';
 import '../llvm.dart';
 import '../disposable.dart';
 
 class MemoryBuffer extends LlvmWrappedObject<LLVMMemoryBuffer>
     implements Disposable {
-  MemoryBuffer.raw(Pointer<LLVMMemoryBuffer> handle, [Llvm llvm])
-      : super.raw(handle, llvm) {
+  MemoryBuffer.raw(super.handle, [super.llvm]) : super.raw() {
     this.llvm.trackDisposable(this);
   }
 
@@ -16,7 +15,7 @@ class MemoryBuffer extends LlvmWrappedObject<LLVMMemoryBuffer>
   factory MemoryBuffer.copy(ByteBuffer buffer, String name) {
     final length = buffer.lengthInBytes;
     final ptr = llvm.allocator.allocate<Uint8>(count: length);
-    ptr.asTypedList(length)..setAll(0, buffer.asUint8List());
+    ptr.asTypedList(length).setAll(0, buffer.asUint8List());
 
     final llvmBuffer = MemoryBuffer.of(ptr, length, name, copy: true);
     llvm.allocator.free(ptr);

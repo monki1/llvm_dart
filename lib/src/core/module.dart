@@ -1,12 +1,15 @@
 import 'dart:ffi';
 
-import 'package:llvm/llvm.dart';
-import 'package:llvm/bindings.dart';
-import 'package:llvm/src/core/memory_buffers.dart';
+import 'types.dart';
+
+import '../disposable.dart';
+import '../llvm.dart';
+import '../../bindings.dart';
+import 'memory_buffers.dart';
+import 'value.dart';
 
 class Module extends LlvmWrappedObject<LLVMModule> implements Disposable {
-  Module.raw(Pointer<LLVMModule> handle, [Llvm parent])
-      : super.raw(handle, parent) {
+  Module.raw(super.handle, [super.parent]) : super.raw() {
     ownLlvm.trackDisposable(this);
   }
 

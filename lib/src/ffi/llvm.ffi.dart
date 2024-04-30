@@ -1,27 +1,61 @@
 // auto-generated, DO NOT EDIT
 // Instead, run pub run build_runner build
 
+// ignore_for_file: non_constant_identifier_names, camel_case_types
+
 import 'dart:ffi';
 
-class char extends Struct {}
+typedef char = Uint8;
 
-class LLVMValue extends Struct {}
+// Represents an LLVM value with integer, floating-point, and pointer types.
+final class LLVMValue extends Struct {
+  @Int32()
+  external int kind;
+  @Float()
+  external double value;
+  external Pointer<Void> data;
+}
 
-class LLVMType extends Struct {}
+// Hypothetical structure for representing an LLVM type.
+final class LLVMType extends Struct {
+  @Int32()
+  external int typeId; // Hypothetical field to represent some type aspect
+}
 
-class LLVMContext extends Struct {}
+// Represents context in LLVM, possibly with a pointer to the context data.
+final class LLVMContext extends Struct {
+  external Pointer<Void> contextRef; // Pointer to the native context data
+}
 
-class LLVMMemoryBuffer extends Struct {}
+// Memory buffer in LLVM, potentially used for managing raw data.
+final class LLVMMemoryBuffer extends Struct {
+  external Pointer<Void> buffer; // Pointer to the memory buffer
+}
 
-class LLVMModule extends Struct {}
+// Represents an LLVM module.
+final class LLVMModule extends Struct {
+  external Pointer<Void> moduleRef; // Pointer to the native module structure
+}
 
-class LLVMBasicBlock extends Struct {}
+// Represents a basic block in LLVM.
+final class LLVMBasicBlock extends Struct {
+  external Pointer<Void> basicBlockRef; // Reference to the basic block
+}
 
-class LLVMBuilder extends Struct {}
+// Utility for building LLVM instructions.
+final class LLVMBuilder extends Struct {
+  external Pointer<Void> builderRef; // Reference to the builder
+}
 
-class LLVMGenericValue extends Struct {}
+// Represents a generic value in LLVM.
+final class LLVMGenericValue extends Struct {
+  external Pointer<Void> genericValueRef; // Reference to the generic value
+}
 
-class LLVMExecutionEngine extends Struct {}
+// Execution engine for LLVM.
+final class LLVMExecutionEngine extends Struct {
+  external Pointer<Void> engineRef; // Reference to the engine
+}
 
 typedef _LLVMDisposeMessage_native = Void Function(Pointer<char>);
 typedef LLVMDisposeMessage_dart = void Function(Pointer<char> Message);

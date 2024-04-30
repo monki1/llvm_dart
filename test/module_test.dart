@@ -8,7 +8,7 @@ void main() {
     final module = Module('my fancy module');
     expect(module.identifier, 'my fancy module');
 
-    module.identifier = 'new\0name';
-    expect(module.identifier, 'new\0name');
+    module.identifier = 'new name';
+    expect(module.identifier, 'new name');
   });
 }

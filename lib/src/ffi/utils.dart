@@ -33,7 +33,7 @@ extension AllocatorUtils on Allocator {
     } else {
       length = encoded.length;
       ptr = allocate<Uint8>(count: length);
-      ptr.asTypedList(length)..setAll(0, encoded);
+      ptr.asTypedList(length).setAll(0, encoded);
     }
 
     return PointerWithLength(ptr.cast(), length);
@@ -57,11 +57,11 @@ extension AllocatorUtils on Allocator {
 
 extension ReadString on Pointer<char> {
   /// When [length] is null or not set, instead reads to the first zero byte.
-  String readUtf8({int length}) {
+  String readUtf8({int? length}) {
     final asBytes = cast<Uint8>();
 
     if (length == null) {
-      for (length = 0; asBytes[length] != 0; length++) {}
+      for (length = 0; asBytes[length!] != 0; length++) {}
     }
 
     return utf8.decode(asBytes.asTypedList(length));

@@ -1,12 +1,11 @@
 import 'dart:ffi';
 
-import 'package:llvm/bindings.dart';
-import 'package:llvm/llvm.dart';
+import '../bindings.dart';
+import '../llvm.dart';
 
 class ExecutionEngine extends LlvmWrappedObject<LLVMExecutionEngine>
     implements Disposable {
-  ExecutionEngine.raw(Pointer<LLVMExecutionEngine> handle, [Llvm llvm])
-      : super.raw(handle, llvm);
+  ExecutionEngine.raw(super.handle, [super.llvm]) : super.raw();
 
   factory ExecutionEngine.forModule(Module module) {
     final outEE = llvm.allocator.allocate<Pointer<LLVMExecutionEngine>>();
@@ -37,7 +36,7 @@ class ExecutionEngine extends LlvmWrappedObject<LLVMExecutionEngine>
 
     final result = bindings.LLVMRunFunction(
       handle,
-      function.handle,
+      function.handle as Pointer<LLVMValue>,
       args.length,
       argPtr,
     );
@@ -54,8 +53,7 @@ class ExecutionEngine extends LlvmWrappedObject<LLVMExecutionEngine>
 }
 
 class GenericValue extends LlvmWrappedObject<LLVMGenericValue> {
-  GenericValue.raw(Pointer<LLVMGenericValue> handle, [Llvm llvm])
-      : super.raw(handle, llvm);
+  GenericValue.raw(super.handle, [super.llvm]) : super.raw();
 
   factory GenericValue.ofInt(IntType type, int int, {bool isSigned = false}) {
     final ptr = llvm.bindings

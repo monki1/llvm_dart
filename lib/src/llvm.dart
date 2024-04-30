@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:ffi';
 
-import 'package:llvm/bindings.dart';
-import 'package:llvm/llvm.dart';
+import 'platforms.dart';
+import '../bindings.dart';
+import '../llvm.dart';
 import 'package:meta/meta.dart';
 
-import 'disposable.dart';
 import '' as lib;
 
 class Llvm implements Disposable {
@@ -17,14 +17,15 @@ class Llvm implements Disposable {
 
   Llvm._(this.allocator, this.bindings);
 
-  factory Llvm(DynamicLibrary library, {Allocator allocator}) {
+  factory Llvm(DynamicLibrary library, {Allocator? allocator}) {
     allocator ??= Allocator();
 
     return Llvm._(allocator, Bindings(library));
   }
 
-  factory Llvm.open({Allocator allocator}) {
-    final library = DynamicLibrary.open('libLLVM.so');
+  factory Llvm.open({Allocator? allocator}) {
+    final path = getPathOfLLVMFileOfPlatform();
+    final library = DynamicLibrary.open(path);
     return Llvm(library, allocator: allocator);
   }
 
@@ -58,7 +59,7 @@ class Llvm implements Disposable {
 }
 
 class _LlvmBox {
-  Llvm result;
+  Llvm? result;
 
   Llvm getOrCreate() {
     return result ??= Llvm.open();
@@ -68,7 +69,7 @@ class _LlvmBox {
 final _defaultBox = _LlvmBox();
 
 Llvm get llvm {
-  final box = (Zone.current[#_LlvmBox] as _LlvmBox) ?? _defaultBox;
+  final box = (Zone.current[#_LlvmBox] as _LlvmBox?) ?? _defaultBox;
   return box.getOrCreate();
 }
 
@@ -90,7 +91,7 @@ abstract class LlvmWrappedObject<T extends NativeType> {
   @protected
   Allocator get allocator => ownLlvm.allocator;
 
-  LlvmWrappedObject.raw(this.handle, [Llvm llvm]) : llvm = llvm ?? lib.llvm;
+  LlvmWrappedObject.raw(this.handle, [Llvm? llvm]) : llvm = llvm ?? lib.llvm;
 
   @override
   int get hashCode => handle.hashCode;
