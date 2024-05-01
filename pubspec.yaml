@@ -1,4 +1,4 @@
-name: llvm_dart
+name: llvm
 description: Dart bindings to the LLVM C-API
 version: 0.0.1
 repository: https://github.com/monki1/llvm_dart

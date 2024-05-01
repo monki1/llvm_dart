@@ -1,4 +1,4 @@
-import 'package:llvm_dart/llvm_dart.dart';
+import 'package:llvm/llvm.dart';
 import 'package:test/test.dart';
 
 void main() {

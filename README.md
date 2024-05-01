@@ -28,7 +28,7 @@ The Dart LLVM bindings provide a direct interface to the LLVM C-API, enabling Da
 
 ```yaml
    dependencies:
-     llvm_dart: 
+     llvm: 
         path: /path/to/llvm_dart/
    ```
    
@@ -40,7 +40,7 @@ Below are some examples of how to use the Dart LLVM bindings:
 #### Creating a Module
 
 ```dart
-import 'package:llvm_dart/llvm_dart.dart';
+import 'package:llvm/llvm.dart';
 
 void main() {
   final module = Module('my_module');
@@ -51,7 +51,7 @@ void main() {
 #### Adding a Function to a Module
 
 ```dart
-import 'package:llvm_dart/llvm_dart.dart';
+import 'package:llvm/llvm.dart';
 
 void main() {
   final module = Module('my_module');
@@ -66,7 +66,7 @@ void main() {
 #### Compiling and Running Code JIT
 
 ```dart
-import 'package:llvm_dart/llvm_dart.dart';
+import 'package:llvm/llvm.dart';
 
 void main() {
   final module = Module('my_module');
